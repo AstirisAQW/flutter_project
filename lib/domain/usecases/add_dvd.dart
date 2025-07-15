@@ -1,0 +1,35 @@
+import 'dart:math';
+import '../entities/dvd_entity.dart';
+import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+
+class AddDvdUseCase {
+  final Uuid _uuid;
+
+  AddDvdUseCase(this._uuid);
+
+  // The 'call' method makes the class callable like a function.
+  DvdEntity call({required Size screenSize}) {
+    final random = Random();
+
+    // Random starting position within screen bounds
+    final startX =
+        random.nextDouble() *
+        (screenSize.width - 150); // 150 is approx width of DVD logo
+    final startY =
+        random.nextDouble() * (screenSize.height - 80); // 80 is approx height
+
+    // Random velocity
+    final vx =
+        (random.nextBool() ? 1.0 : -1.0) *
+        (random.nextDouble() * 2 + 1.5); // Speed between 1.5 and 3.5
+    final vy =
+        (random.nextBool() ? 1.0 : -1.0) * (random.nextDouble() * 2 + 1.5);
+
+    return DvdEntity(
+      id: _uuid.v4(),
+      initialPosition: Offset(startX, startY),
+      velocity: Offset(vx, vy),
+    );
+  }
+}
