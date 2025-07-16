@@ -3,7 +3,6 @@ import '../../domain/entities/dvd_entity.dart';
 import '../../domain/usecases/add_dvd.dart';
 import '../../domain/usecases/deleteAll_dvd.dart';
 import '../../domain/usecases/delete_dvd.dart';
-import '../../domain/usecases/usecase.dart';
 import 'dvd_event.dart';
 import 'dvd_state.dart';
 
@@ -26,7 +25,12 @@ class DvdBloc extends Bloc<DvdEvent, DvdState> {
     final currentDvds = state is DvdLoaded
         ? (state as DvdLoaded).dvds
         : <DvdEntity>[];
-    final newDvd = addDvdUseCase(screenSize: event.screenSize);
+
+    final newDvd = addDvdUseCase(
+      screenWidth: event.screenSize.width,
+      screenHeight: event.screenSize.height,
+    );
+
     emit(DvdLoaded(dvds: List.from(currentDvds)..add(newDvd)));
   }
 
@@ -34,7 +38,6 @@ class DvdBloc extends Bloc<DvdEvent, DvdState> {
     if (state is DvdLoaded) {
       final currentDvds = (state as DvdLoaded).dvds;
 
-      // Call the use case with the current list
       final updatedList = deleteDvdUseCase(DeleteDvdParams(dvds: currentDvds));
 
       if (updatedList.isEmpty) {
@@ -46,7 +49,7 @@ class DvdBloc extends Bloc<DvdEvent, DvdState> {
   }
 
   void _onDeleteAllDvds(DeleteAllDvds event, Emitter<DvdState> emit) {
-    deleteAllDvdsUseCase(NoParams());
+    deleteAllDvdsUseCase();
     emit(DvdInitial());
   }
 }

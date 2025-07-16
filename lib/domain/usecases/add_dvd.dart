@@ -1,12 +1,13 @@
 import 'dart:math';
-import '../entities/dvd_entity.dart';
-import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:uuid/uuid.dart';
+import '../entities/dvd_entity.dart';
 
 class AddDvdUseCase {
   final Uuid _uuid;
+  final Random _random = Random();
 
-  final List<String> dvd_images = [
+  static const List<String> _dvdImages = [
     'assets/dvd-black.png',
     'assets/dvd-blue.png',
     'assets/dvd-green.png',
@@ -15,28 +16,27 @@ class AddDvdUseCase {
     'assets/dvd-yellow.png',
   ];
 
+  static const double _dvdWidth = 150.0;
+  static const double _dvdHeight = 70.0;
+
   AddDvdUseCase(this._uuid);
 
-  DvdEntity call({required Size screenSize}) {
-    final random = Random();
-
-    // Random starting position within screen bounds
-    final startX = random.nextDouble() * (screenSize.width - 150);
-    final startY = random.nextDouble() * (screenSize.height - 80);
+  DvdEntity call({required double screenWidth, required double screenHeight}) {
+    final startX = _random.nextDouble() * (screenWidth - _dvdWidth);
+    final startY = _random.nextDouble() * (screenHeight - _dvdHeight);
 
     final vx =
-        (random.nextBool() ? 1.0 : -1.0) *
-        (random.nextDouble() * 2 + 1.5); // Speed between 1.5 and 3.5
+        (_random.nextBool() ? 1.0 : -1.0) * (_random.nextDouble() * 2 + 1.5);
     final vy =
-        (random.nextBool() ? 1.0 : -1.0) * (random.nextDouble() * 2 + 1.5);
+        (_random.nextBool() ? 1.0 : -1.0) * (_random.nextDouble() * 2 + 1.5);
 
-    final getRandomImage = dvd_images[random.nextInt(dvd_images.length)];
+    final randomImage = _dvdImages[_random.nextInt(_dvdImages.length)];
 
     return DvdEntity(
       id: _uuid.v4(),
       initialPosition: Offset(startX, startY),
       velocity: Offset(vx, vy),
-      image: getRandomImage,
+      image: randomImage,
     );
   }
 }

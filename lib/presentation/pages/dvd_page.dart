@@ -1,9 +1,9 @@
-import '../../presentation/bloc/dvd_bloc.dart';
-import '../../presentation/bloc/dvd_event.dart';
-import '../../presentation/bloc/dvd_state.dart';
-import '../../presentation/widgets/moving_dvd_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/dvd_bloc.dart';
+import '../bloc/dvd_event.dart';
+import '../bloc/dvd_state.dart';
+import '../widgets/moving_dvd_widget.dart';
 
 class DvdPage extends StatelessWidget {
   const DvdPage({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class DvdPage extends StatelessWidget {
           }
           return const Center(
             child: Text(
-              'Press the + button to add a DVD logo!',
+              'Press the + button',
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 18,
@@ -38,36 +38,26 @@ class DvdPage extends StatelessWidget {
           );
         },
       ),
-
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () {
-              context.read<DvdBloc>().add(DeleteAllDvds());
-            },
+            onPressed: () => context.read<DvdBloc>().add(DeleteAllDvds()),
             tooltip: 'Delete All',
             backgroundColor: Colors.red,
-            mini: true,
             child: const Icon(Icons.delete_forever),
           ),
           const SizedBox(width: 10),
-
           FloatingActionButton(
-            onPressed: () {
-              context.read<DvdBloc>().add(DeleteDvd());
-            },
+            onPressed: () => context.read<DvdBloc>().add(DeleteDvd()),
             tooltip: 'Delete Dvd',
             backgroundColor: Colors.orange,
-            mini: true,
             child: const Icon(Icons.remove),
           ),
           const SizedBox(width: 10),
-
           FloatingActionButton(
-            onPressed: () {
-              context.read<DvdBloc>().add(AddDvd(screenSize: screenSize));
-            },
+            onPressed: () =>
+                context.read<DvdBloc>().add(AddDvd(screenSize: screenSize)),
             tooltip: 'Add DVD',
             child: const Icon(Icons.add),
           ),

@@ -1,16 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'usecase.dart';
 import 'package:flutter_project/domain/entities/dvd_entity.dart';
 
-class DeleteDvdUseCase implements UseCase<List<DvdEntity>, DeleteDvdParams> {
-  @override
+class DeleteDvdUseCase {
   List<DvdEntity> call(DeleteDvdParams params) {
     if (params.dvds.isEmpty) {
-      return []; // Return an empty list if there's nothing to remove.
+      return [];
     }
-    final updatedList = List<DvdEntity>.from(params.dvds);
-    updatedList.removeLast();
-    return updatedList;
+    return List<DvdEntity>.from(params.dvds)..removeLast();
   }
 }
 

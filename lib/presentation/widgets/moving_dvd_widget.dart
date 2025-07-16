@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:math'; // Import math for the Random class
-import '../../domain/entities/dvd_entity.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import '../../domain/entities/dvd_entity.dart';
 
 class MovingDvdWidget extends StatefulWidget {
   final DvdEntity dvdEntity;
   final Size screenSize;
 
-  // Constants for the DVD logo size
   static const double dvdWidth = 150.0;
   static const double dvdHeight = 70.0;
 
@@ -28,7 +27,7 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
   Timer? _timer;
 
   final _random = Random();
-  final List<String> dvd_images = const [
+  final List<String> _dvdImages = const [
     'assets/dvd-black.png',
     'assets/dvd-blue.png',
     'assets/dvd-green.png',
@@ -42,10 +41,9 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
     super.initState();
     position = widget.dvdEntity.initialPosition;
     velocity = widget.dvdEntity.velocity;
-
     currentImage = widget.dvdEntity.image;
 
-    // Start the animation loop
+    // Start the animation timer, updating at roughly 60fps.
     _timer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
       _updatePosition();
     });
@@ -54,24 +52,25 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
   void _changeDvdImage() {
     String newImage;
     do {
-      newImage = dvd_images[_random.nextInt(dvd_images.length)];
+      newImage = _dvdImages[_random.nextInt(_dvdImages.length)];
     } while (newImage == currentImage);
 
-    currentImage = newImage;
+    setState(() {
+      currentImage = newImage;
+    });
   }
 
   void _updatePosition() {
     setState(() {
       position += velocity;
-
       bool bounced = false;
 
-      // Bounce off walls
       if (position.dx <= 0 ||
           position.dx >= widget.screenSize.width - MovingDvdWidget.dvdWidth) {
         velocity = Offset(-velocity.dx, velocity.dy);
         bounced = true;
       }
+
       if (position.dy <= 0 ||
           position.dy >= widget.screenSize.height - MovingDvdWidget.dvdHeight) {
         velocity = Offset(velocity.dx, -velocity.dy);
@@ -86,7 +85,8 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
 
   @override
   void dispose() {
-    _timer?.cancel(); // IMPORTANT: Cancel the timer to avoid memory leaks
+    // Cancel the timer to prevent memory leaks when the widget is removed.
+    _timer?.cancel();
     super.dispose();
   }
 
