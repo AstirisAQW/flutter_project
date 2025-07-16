@@ -8,7 +8,6 @@ abstract class DvdEvent extends Equatable {
   List<Object> get props => [];
 }
 
-// Event to trigger adding a new DVD
 class AddDvd extends DvdEvent {
   final Size screenSize;
 
@@ -17,3 +16,7 @@ class AddDvd extends DvdEvent {
   @override
   List<Object> get props => [screenSize];
 }
+
+class DeleteDvd extends DvdEvent {}
+
+class DeleteAllDvds extends DvdEvent {}

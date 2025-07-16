@@ -17,18 +17,13 @@ class AddDvdUseCase {
 
   AddDvdUseCase(this._uuid);
 
-  // The 'call' method makes the class callable like a function.
   DvdEntity call({required Size screenSize}) {
     final random = Random();
 
     // Random starting position within screen bounds
-    final startX =
-        random.nextDouble() *
-        (screenSize.width - 150); // 150 is approx width of DVD logo
-    final startY =
-        random.nextDouble() * (screenSize.height - 80); // 80 is approx height
+    final startX = random.nextDouble() * (screenSize.width - 150);
+    final startY = random.nextDouble() * (screenSize.height - 80);
 
-    // Random velocity
     final vx =
         (random.nextBool() ? 1.0 : -1.0) *
         (random.nextDouble() * 2 + 1.5); // Speed between 1.5 and 3.5

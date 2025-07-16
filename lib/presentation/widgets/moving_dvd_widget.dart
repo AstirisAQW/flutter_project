@@ -78,7 +78,6 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
         bounced = true;
       }
 
-      // STEP 5: Trigger the change on bounce
       if (bounced) {
         _changeDvdImage();
       }

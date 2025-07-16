@@ -1,23 +1,52 @@
 import 'package:bloc/bloc.dart';
+import '../../domain/entities/dvd_entity.dart';
 import '../../domain/usecases/add_dvd.dart';
-import '../../presentation/bloc/dvd_event.dart';
-import '../../presentation/bloc/dvd_state.dart';
+import '../../domain/usecases/deleteAll_dvd.dart';
+import '../../domain/usecases/delete_dvd.dart';
+import '../../domain/usecases/usecase.dart';
+import 'dvd_event.dart';
+import 'dvd_state.dart';
 
 class DvdBloc extends Bloc<DvdEvent, DvdState> {
   final AddDvdUseCase addDvdUseCase;
+  final DeleteDvdUseCase deleteDvdUseCase;
+  final DeleteAllDvdsUseCase deleteAllDvdsUseCase;
 
-  DvdBloc({required this.addDvdUseCase}) : super(DvdInitial()) {
+  DvdBloc({
+    required this.addDvdUseCase,
+    required this.deleteDvdUseCase,
+    required this.deleteAllDvdsUseCase,
+  }) : super(DvdInitial()) {
     on<AddDvd>(_onAddDvd);
+    on<DeleteDvd>(_onDeleteDvd);
+    on<DeleteAllDvds>(_onDeleteAllDvds);
   }
 
   void _onAddDvd(AddDvd event, Emitter<DvdState> emit) {
-    // Get the current list of DVDs, or an empty list if it's the first one
-    final currentDvds = state is DvdLoaded ? (state as DvdLoaded).dvds : [];
-
-    // Use the use case to create a new DVD entity
+    final currentDvds = state is DvdLoaded
+        ? (state as DvdLoaded).dvds
+        : <DvdEntity>[];
     final newDvd = addDvdUseCase(screenSize: event.screenSize);
-
-    // Emit a new state with the updated list
     emit(DvdLoaded(dvds: List.from(currentDvds)..add(newDvd)));
+  }
+
+  void _onDeleteDvd(DeleteDvd event, Emitter<DvdState> emit) {
+    if (state is DvdLoaded) {
+      final currentDvds = (state as DvdLoaded).dvds;
+
+      // Call the use case with the current list
+      final updatedList = deleteDvdUseCase(DeleteDvdParams(dvds: currentDvds));
+
+      if (updatedList.isEmpty) {
+        emit(DvdInitial());
+      } else {
+        emit(DvdLoaded(dvds: updatedList));
+      }
+    }
+  }
+
+  void _onDeleteAllDvds(DeleteAllDvds event, Emitter<DvdState> emit) {
+    deleteAllDvdsUseCase(NoParams());
+    emit(DvdInitial());
   }
 }
