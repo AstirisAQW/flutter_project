@@ -66,10 +66,9 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
       left: position.dx,
       top: position.dy,
       child: Image.asset(
-        'assets/dvd-transparent.png',
+        widget.dvdEntity.image,
         width: MovingDvdWidget.dvdWidth,
         height: MovingDvdWidget.dvdHeight,
-        // Give each a random color
       ),
     );
   }

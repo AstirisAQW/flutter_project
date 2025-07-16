@@ -6,6 +6,15 @@ import 'package:uuid/uuid.dart';
 class AddDvdUseCase {
   final Uuid _uuid;
 
+  final List<String> dvd_images = [
+    'assets/dvd-black.png',
+    'assets/dvd-blue.png',
+    'assets/dvd-green.png',
+    'assets/dvd-purple.png',
+    'assets/dvd-red.png',
+    'assets/dvd-yellow.png',
+  ];
+
   AddDvdUseCase(this._uuid);
 
   // The 'call' method makes the class callable like a function.
@@ -26,10 +35,13 @@ class AddDvdUseCase {
     final vy =
         (random.nextBool() ? 1.0 : -1.0) * (random.nextDouble() * 2 + 1.5);
 
+    final getRandomImage = dvd_images[random.nextInt(dvd_images.length)];
+
     return DvdEntity(
       id: _uuid.v4(),
       initialPosition: Offset(startX, startY),
       velocity: Offset(vx, vy),
+      image: getRandomImage,
     );
   }
 }
