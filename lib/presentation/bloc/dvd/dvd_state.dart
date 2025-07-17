@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/dvd_entity.dart';
+import '../../../domain/entities/dvd_entity.dart';
 
 abstract class DvdState extends Equatable {
   const DvdState();

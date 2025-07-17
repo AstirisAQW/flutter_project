@@ -1,19 +1,19 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:uuid/uuid.dart';
-import '../entities/dvd_entity.dart';
+import '../../entities/dvd_entity.dart';
 
 class AddDvdUseCase {
   final Uuid _uuid;
   final Random _random = Random();
 
   static const List<String> _dvdImages = [
-    'assets/dvd-black.png',
-    'assets/dvd-blue.png',
-    'assets/dvd-green.png',
-    'assets/dvd-purple.png',
-    'assets/dvd-red.png',
-    'assets/dvd-yellow.png',
+    'assets/images/dvd-black.png',
+    'assets/images/dvd-blue.png',
+    'assets/images/dvd-green.png',
+    'assets/images/dvd-purple.png',
+    'assets/images/dvd-red.png',
+    'assets/images/dvd-yellow.png',
   ];
 
   static const double _dvdWidth = 150.0;

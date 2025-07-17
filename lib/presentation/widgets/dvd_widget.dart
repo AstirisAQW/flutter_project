@@ -3,24 +3,24 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../domain/entities/dvd_entity.dart';
 
-class MovingDvdWidget extends StatefulWidget {
+class DvdWidget extends StatefulWidget {
   final DvdEntity dvdEntity;
   final Size screenSize;
 
   static const double dvdWidth = 150.0;
   static const double dvdHeight = 70.0;
 
-  const MovingDvdWidget({
+  const DvdWidget({
     Key? key,
     required this.dvdEntity,
     required this.screenSize,
   }) : super(key: key);
 
   @override
-  State<MovingDvdWidget> createState() => _MovingDvdWidgetState();
+  State<DvdWidget> createState() => _DvdWidgetState();
 }
 
-class _MovingDvdWidgetState extends State<MovingDvdWidget> {
+class _DvdWidgetState extends State<DvdWidget> {
   late Offset position;
   late Offset velocity;
   late String currentImage;
@@ -28,12 +28,12 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
 
   final _random = Random();
   final List<String> _dvdImages = const [
-    'assets/dvd-black.png',
-    'assets/dvd-blue.png',
-    'assets/dvd-green.png',
-    'assets/dvd-purple.png',
-    'assets/dvd-red.png',
-    'assets/dvd-yellow.png',
+    'assets/images/dvd-black.png',
+    'assets/images/dvd-blue.png',
+    'assets/images/dvd-green.png',
+    'assets/images/dvd-purple.png',
+    'assets/images/dvd-red.png',
+    'assets/images/dvd-yellow.png',
   ];
 
   @override
@@ -66,13 +66,13 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
       bool bounced = false;
 
       if (position.dx <= 0 ||
-          position.dx >= widget.screenSize.width - MovingDvdWidget.dvdWidth) {
+          position.dx >= widget.screenSize.width - DvdWidget.dvdWidth) {
         velocity = Offset(-velocity.dx, velocity.dy);
         bounced = true;
       }
 
       if (position.dy <= 0 ||
-          position.dy >= widget.screenSize.height - MovingDvdWidget.dvdHeight) {
+          position.dy >= widget.screenSize.height - DvdWidget.dvdHeight) {
         velocity = Offset(velocity.dx, -velocity.dy);
         bounced = true;
       }
@@ -97,8 +97,8 @@ class _MovingDvdWidgetState extends State<MovingDvdWidget> {
       top: position.dy,
       child: Image.asset(
         currentImage,
-        width: MovingDvdWidget.dvdWidth,
-        height: MovingDvdWidget.dvdHeight,
+        width: DvdWidget.dvdWidth,
+        height: DvdWidget.dvdHeight,
       ),
     );
   }

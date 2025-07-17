@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_project/domain/entities/dvd_entity.dart';
+import '../../entities/dvd_entity.dart';
 
 class DeleteDvdUseCase {
   List<DvdEntity> call(DeleteDvdParams params) {

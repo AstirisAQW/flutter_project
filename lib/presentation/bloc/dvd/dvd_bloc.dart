@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import '../../domain/entities/dvd_entity.dart';
-import '../../domain/usecases/add_dvd.dart';
-import '../../domain/usecases/deleteAll_dvd.dart';
-import '../../domain/usecases/delete_dvd.dart';
+import '../../../domain/entities/dvd_entity.dart';
+import '../../../domain/usecases/dvd/add_dvd.dart';
+import '../../../domain/usecases/dvd/deleteAll_dvd.dart';
+import '../../../domain/usecases/dvd/delete_dvd.dart';
 import 'dvd_event.dart';
 import 'dvd_state.dart';
 
