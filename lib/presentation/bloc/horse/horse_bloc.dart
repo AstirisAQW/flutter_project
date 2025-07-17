@@ -19,14 +19,17 @@ class HorseBloc extends Bloc<HorseEvent, HorseState> {
   }
 
   void _onAddHorse(AddHorse event, Emitter<HorseState> emit) {
-    final currentHorse = state is HorseLoaded
+    final currentHorses = state is HorseLoaded
         ? (state as HorseLoaded).horse
         : <HorseEntity>[];
+        
     final newHorse = addHorseUseCase(
       screenWidth: event.screenSize.width,
       screenHeight: event.screenSize.height,
+      image: event.image,
+      sound: event.sound,
     );
-    emit(HorseLoaded(horse: List.from(currentHorse)..add(newHorse)));
+    emit(HorseLoaded(horse: List.from(currentHorses)..add(newHorse)));
   }
 
   void _onDeleteHorse(DeleteHorse event, Emitter<HorseState> emit) {
